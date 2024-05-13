@@ -1,0 +1,13 @@
+{
+  "name": "iguklang",
+  "version": "0.0.1",
+  "main": "src/main.js",
+  "keywords": [
+    "iGuk",
+    "Brainfuck"
+  ],
+  "author": "Je-Hwan Yoo <yoojehwan1875@gmail.com> (https://github.com/JeHwanYoo)",
+  "license": "beerware",
+  "description": "Esoteric Programming Language which corresponds one-to-one with Brainfuck",
+  "type": "module"
+}
