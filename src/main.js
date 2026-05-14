@@ -1,3 +1,4 @@
+#!/usr/bin/env node
 import {rl} from './io.js'
 import {tokenize, Token} from './token.js'
 import {execute} from './service.js'

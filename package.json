@@ -2,6 +2,9 @@
   "name": "iguklang",
   "version": "0.0.1",
   "main": "src/main.js",
+  "bin": {
+    "iguk": "src/main.js"
+  },
   "keywords": [
     "iGuk",
     "Brainfuck"

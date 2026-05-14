@@ -6,22 +6,40 @@
 
 이 프로젝트는 이국랭의 JavaScript 구현체 입니다.
 
-문법은 [브레인퍽(Brainfuck)](https://namu.wiki/w/%EB%B8%8C%EB%A0%88%EC%9D%B8%ED%8D%BD#s-5.1)과 1대1 대응됩니다.
+언어 스펙은 [브레인퍽(Brainfuck)](https://namu.wiki/w/%EB%B8%8C%EB%A0%88%EC%9D%B8%ED%8D%BD#s-5.1)을 계승했습니다.
 
 ## Synopsis
 
 Required: [node 14+](https://nodejs.org/en/download/current)
 
+전역 설치:
+
 ```sh
-node src/main [파일]
+npm install -g iguklang
+# 또는 로컬 클론 후
+npm link
+```
+
+실행:
+
+```sh
+iguk [파일]
 ```
 
 ```sh
-node src/main example/print-hello.iguk
+iguk example/print-hello.iguk
 ```
 
 ```
 Hello, World!
+```
+
+```sh
+iguk example/fibonacci.iguk
+```
+
+```
+112358
 ```
 
 ## Syntax

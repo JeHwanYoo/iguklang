@@ -66,9 +66,12 @@ export function isZeroByte(array, pointer) {
  * @return {number} - The index of the last occurrence of Token.END_LOOP or the index of the last command if Token.END_LOOP is not found.
  */
 export function forward(commands, current) {
+  let depth = 0
   for (let i = current; i < commands.length; i++) {
-    if (commands[i] === Token.END_LOOP) {
-      return i
+    if (commands[i] === Token.START_LOOP) depth++
+    else if (commands[i] === Token.END_LOOP) {
+      depth--
+      if (depth === 0) return i
     }
   }
   return commands.length - 1
@@ -82,9 +85,12 @@ export function forward(commands, current) {
  * @return {number} - The offset of the last occurrence of the "START_LOOP" command. Returns 0 if the command is not found.
  */
 export function rewind(commands, current) {
+  let depth = 0
   for (let i = current; i >= 0; i--) {
-    if (commands[i] === Token.START_LOOP) {
-      return i
+    if (commands[i] === Token.END_LOOP) depth++
+    else if (commands[i] === Token.START_LOOP) {
+      depth--
+      if (depth === 0) return i
     }
   }
   return 0
