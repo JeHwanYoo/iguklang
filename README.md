@@ -12,39 +12,13 @@
 
 Required: [node 18+](https://nodejs.org/en/download/current)
 
-이 언어는 npm에 [`iguklang`](https://www.npmjs.com/package/iguklang)으로 배포되어 있습니다.
-
-설치 없이 실행:
+npm에 [`iguklang`](https://www.npmjs.com/package/iguklang)으로 배포되어 있습니다.
 
 ```sh
-npx iguk [파일]
+npx iguklang [파일]
 ```
 
-전역 설치 후 실행:
-
-```sh
-npm install -g iguklang
-iguk [파일]
-```
-
-예제 실행:
-
-```sh
-npx iguk example/print-hello.iguk
-# Hello, World!
-
-npx iguk example/fibonacci.iguk
-# 112358
-
-npx iguk example/digits.iguk
-# 0123456789
-
-echo 'iGuk' | npx iguk example/echo.iguk
-# iGuk  (입력을 그대로 되돌려 출력)
-
-printf '5 16' | npx iguk example/adder.iguk
-# 21  (공백으로 구분된 두 십진수의 합, 합이 255 이하)
-```
+예제는 [`example/`](./example)를 참고하세요.
 
 ## Syntax
 

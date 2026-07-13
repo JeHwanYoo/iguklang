@@ -41,23 +41,20 @@ export function compile(tokens) {
   }
 
   for (const tok of tokens) {
-    if (tok.startsWith(Token.MUTATE_VALUE_START)) {
-      const body = tok.slice(Token.MUTATE_VALUE_START.length)
-      const isIncrement = tok.endsWith(Token.INCREMENT_VALUE_END)
-      const unit = isIncrement ? Operator.INCREMENT_ONE : Operator.DECREMENT_ONE
-      foldOrPush(Opcode.ADD, countChar(body, unit) * (isIncrement ? 1 : -1))
-    } else if (tok === Token.INCREMENT_POINTER) {
-      foldOrPush(Opcode.MOVE, 1)
-    } else if (tok === Token.DECREMENT_POINTER) {
-      foldOrPush(Opcode.MOVE, -1)
-    } else if (tok === Token.START_LOOP) {
-      push(Opcode.LOOP_START, 0)
-    } else if (tok === Token.END_LOOP) {
-      push(Opcode.LOOP_END, 0)
-    } else if (tok === Token.INPUT_VALUE) {
-      push(Opcode.INPUT, 0)
-    } else if (tok === Token.OUTPUT_VALUE) {
-      push(Opcode.OUTPUT, 0)
+    switch (true) {
+      case tok.startsWith(Token.MUTATE_VALUE_START): {
+        const body = tok.slice(Token.MUTATE_VALUE_START.length)
+        const isIncrement = tok.endsWith(Token.INCREMENT_VALUE_END)
+        const unit = isIncrement ? Operator.INCREMENT_ONE : Operator.DECREMENT_ONE
+        foldOrPush(Opcode.ADD, countChar(body, unit) * (isIncrement ? 1 : -1))
+        break
+      }
+      case tok === Token.INCREMENT_POINTER: foldOrPush(Opcode.MOVE, 1); break
+      case tok === Token.DECREMENT_POINTER: foldOrPush(Opcode.MOVE, -1); break
+      case tok === Token.START_LOOP: push(Opcode.LOOP_START, 0); break
+      case tok === Token.END_LOOP: push(Opcode.LOOP_END, 0); break
+      case tok === Token.INPUT_VALUE: push(Opcode.INPUT, 0); break
+      case tok === Token.OUTPUT_VALUE: push(Opcode.OUTPUT, 0); break
     }
   }
 

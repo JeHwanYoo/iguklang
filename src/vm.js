@@ -4,19 +4,37 @@ import {inputValue} from './io.js'
 import {memory} from './mem.js'
 
 /**
- * Executes a compiled program against the shared {@link memory}.
+ * Result of {@link run}, reporting facts about what was written so the driver
+ * can apply presentation policy (e.g. a trailing newline on a TTY).
  *
- * Output is buffered and flushed on input or completion so tight output loops
- * do not pay a syscall per character.
+ * @typedef {Object} RunResult
+ * @property {boolean} wroteOutput - Whether the program produced any output.
+ * @property {boolean} endsWithNewline - Whether the last output byte was a newline.
+ */
+
+/**
+ * Executes a compiled program against the shared {@link memory}, writing the
+ * program's output bytes verbatim. Output is buffered and flushed on input or
+ * completion so tight output loops do not pay a syscall per character.
  *
  * @param {import('./compiler.js').Program} program
- * @returns {void}
+ * @returns {RunResult}
  */
 export function run(program) {
   const {ops, args, length} = program
   const array = memory.array
   let pointer = memory.pointer
   let out = ''
+  let wroteOutput = false
+  let endsWithNewline = false
+
+  const flush = () => {
+    if (!out) return
+    fs.writeSync(1, out)
+    wroteOutput = true
+    endsWithNewline = out.endsWith('\n')
+    out = ''
+  }
 
   for (let pc = 0; pc < length; pc++) {
     switch (ops[pc]) {
@@ -36,15 +54,13 @@ export function run(program) {
         out += String.fromCharCode(array[pointer])
         break
       case Opcode.INPUT:
-        if (out) {
-          fs.writeSync(1, out)
-          out = ''
-        }
+        flush()
         array[pointer] = inputValue()
         break
     }
   }
 
-  if (out) fs.writeSync(1, out)
+  flush()
   memory.pointer = pointer
+  return {wroteOutput, endsWithNewline}
 }
