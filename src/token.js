@@ -1,17 +1,4 @@
 /**
- * Tokenizes the given code by matching specific patterns.
- *
- * @param {string} code - The code to be tokenized.
- *
- * @returns {Array.<string>} - An array of tokens extracted from the code.
- */
-export function tokenize(code) {
-  return code
-    .match(/이구(우+)욱|이구(구+)국|고수\?|하-|신|킹갓 충무공 제너럴|이국 왤캐 고수임\?|이국이 처럼 살고싶다.|\/\/(.*?)(\n|$)/g)
-    .filter(t => !t.startsWith('//'))
-}
-
-/**
  * Represents a set of tokens used in a programming language.
  *
  * @typedef {Object} Token
@@ -35,16 +22,4 @@ export const Token = {
   END_LOOP: '킹갓 충무공 제너럴',
   INPUT_VALUE: '이국 왤캐 고수임?',
   OUTPUT_VALUE: '이국이 처럼 살고싶다.',
-}
-
-/**
- * Represents different operator values for incrementing or decrementing a value.
- *
- * @typedef {Object} Operator
- * @property {string} INCREMENT_ONE - The operator to increment by one.
- * @property {string} DECREMENT_ONE - The operator to decrement by one.
- */
-export const Operator = {
-  INCREMENT_ONE: '우',
-  DECREMENT_ONE: '구',
 }

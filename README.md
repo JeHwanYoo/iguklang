@@ -10,36 +10,40 @@
 
 ## Synopsis
 
-Required: [node 14+](https://nodejs.org/en/download/current)
+Required: [node 18+](https://nodejs.org/en/download/current)
 
-전역 설치:
+이 언어는 npm에 [`iguklang`](https://www.npmjs.com/package/iguklang)으로 배포되어 있습니다.
+
+설치 없이 실행:
+
+```sh
+npx iguk [파일]
+```
+
+전역 설치 후 실행:
 
 ```sh
 npm install -g iguklang
-# 또는 로컬 클론 후
-npm link
-```
-
-실행:
-
-```sh
 iguk [파일]
 ```
 
-```sh
-iguk example/print-hello.iguk
-```
-
-```
-Hello, World!
-```
+예제 실행:
 
 ```sh
-iguk example/fibonacci.iguk
-```
+npx iguk example/print-hello.iguk
+# Hello, World!
 
-```
-112358
+npx iguk example/fibonacci.iguk
+# 112358
+
+npx iguk example/digits.iguk
+# 0123456789
+
+echo 'iGuk' | npx iguk example/echo.iguk
+# iGuk  (입력을 그대로 되돌려 출력)
+
+printf '5 16' | npx iguk example/adder.iguk
+# 21  (공백으로 구분된 두 십진수의 합, 합이 255 이하)
 ```
 
 ## Syntax
@@ -88,6 +92,8 @@ iguk example/fibonacci.iguk
 사용 가능한 메모리 영역은 1바이트 정수로 이루어진 32768 길이의 배열입니다.
 
 포인터를 제어하여 특정 셀에 접근할 수 있습니다.
+
+입력(`이국 왤케 고수임?`)은 stdin에서 1바이트씩 읽으며, 입력이 끝나면(EOF) 해당 셀에 `0`이 들어갑니다.
 
 언어 특성상 무한 루프에 매우 취약하며, 디버깅이 매우 어습니다.
 
