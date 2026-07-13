@@ -1,11 +1,11 @@
 {
   "name": "iguklang",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Esoteric Programming Language which corresponds one-to-one with Brainfuck",
   "type": "module",
   "main": "src/main.js",
   "bin": {
-    "iguk": "src/main.js"
+    "iguklang": "src/main.js"
   },
   "files": [
     "src",
