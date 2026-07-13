@@ -1,16 +1,39 @@
 {
   "name": "iguklang",
-  "version": "0.0.1",
+  "version": "1.0.1",
+  "description": "Esoteric Programming Language which corresponds one-to-one with Brainfuck",
+  "type": "module",
   "main": "src/main.js",
   "bin": {
-    "iguk": "src/main.js"
+    "iguklang": "src/main.js"
+  },
+  "files": [
+    "src",
+    "example",
+    "README.md",
+    "LICENSE"
+  ],
+  "engines": {
+    "node": ">=18"
+  },
+  "scripts": {
+    "test": "node --test",
+    "start": "node src/main.js"
   },
   "keywords": [
     "iGuk",
-    "Brainfuck"
+    "Brainfuck",
+    "esolang",
+    "interpreter"
   ],
   "author": "Je-Hwan Yoo <yoojehwan1875@gmail.com> (https://github.com/JeHwanYoo)",
   "license": "beerware",
-  "description": "Esoteric Programming Language which corresponds one-to-one with Brainfuck",
-  "type": "module"
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/JeHwanYoo/iguklang.git"
+  },
+  "bugs": {
+    "url": "https://github.com/JeHwanYoo/iguklang/issues"
+  },
+  "homepage": "https://github.com/JeHwanYoo/iguklang#readme"
 }

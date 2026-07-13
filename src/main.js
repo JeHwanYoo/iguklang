@@ -1,20 +1,19 @@
 #!/usr/bin/env node
-import {rl} from './io.js'
-import {tokenize, Token} from './token.js'
-import {execute} from './service.js'
 import * as fs from 'node:fs/promises'
-import {memory} from './mem.js'
+import {tokenize} from './tokenizer.js'
+import {compile} from './compiler.js'
+import {run} from './vm.js'
 
 async function program() {
-  const code = await fs.readFile(process.argv[2])
-
-  memory.commands = tokenize(code.toString())
-
-  for (memory.offset = 0; memory.offset < memory.commands.length; memory.offset++) {
-    execute()
+  const path = process.argv[2]
+  if (!path) {
+    console.error('실행할 파일을 지정해 주세요. 예: npx iguklang example/print-hello.iguk')
+    process.exitCode = 1
+    return
   }
 
-  rl.close()
+  const code = await fs.readFile(path, 'utf8')
+  run(compile(tokenize(code)))
 }
 
 await program()

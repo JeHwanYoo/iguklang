@@ -1,0 +1,51 @@
+name: Release
+
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: '릴리스할 버전(예: 1.0.1). 비우면 package.json 버전을 그대로 사용.'
+        required: false
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      id-token: write
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          registry-url: https://registry.npmjs.org
+
+      - run: npm test
+
+      - name: Bump version
+        if: inputs.version != ''
+        run: |
+          npm version "${{ inputs.version }}" --no-git-tag-version
+          git config user.name 'github-actions[bot]'
+          git config user.email 'github-actions[bot]@users.noreply.github.com'
+          git commit -am "chore: release v${{ inputs.version }}"
+          git push
+
+      - name: Create and push tag
+        run: |
+          VERSION="$(node -p "require('./package.json').version")"
+          if git rev-parse "v$VERSION" >/dev/null 2>&1; then
+            echo "태그 v$VERSION 이 이미 존재합니다." >&2
+            exit 1
+          fi
+          git tag "v$VERSION"
+          git push origin "v$VERSION"
+
+      - run: npm publish --provenance --access public
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+      - name: Create GitHub Release
+        run: gh release create "v$(node -p "require('./package.json').version")" --generate-notes
+        env:
+          GH_TOKEN: ${{ github.token }}
